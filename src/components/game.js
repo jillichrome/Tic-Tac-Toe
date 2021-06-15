@@ -4,12 +4,15 @@ import "./game.css";
 
 function Game() {
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [isXNext, setIsXNext] = useState(true);
 
   function renderSquare(i) {
     return(
       <Square value={squares[i]} onClick={() => {
-        squares[i] = 'X';
-        setSquares(squares)
+        const nextSquare = squares.slice();
+        nextSquare[i] = isXNext ? 'X' : 'O';
+        setSquares(nextSquare);
+        setIsXNext(!isXNext)
       }} />
     )
   };
