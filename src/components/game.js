@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Square from './square.js';
+import calculateWinner from './calculateWinner.js';
 import "./game.css";
 
 function Game() {
@@ -16,6 +17,27 @@ function Game() {
       }} />
     )
   };
+
+  const winner = calculateWinner(squares);
+
+  function isBoardFull(squares) {
+    for(let i = 0; i < squares.length; i++) {
+      if(squares[i] == null) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function getStatus() {
+    if(winner) {
+      return "Winner: " + winner
+    } else if (isBoardFull(squares)) {
+      return "Draw!"
+    } else {
+      return "Next player: " + (isXNext ? 'X' : 'O');
+    }
+  }
 
   return (
     <div className="container">
@@ -37,6 +59,7 @@ function Game() {
             {renderSquare(8)}
           </div>
         </div>
+        <div className='game-info'>{getStatus()}</div>
       </div>
     </div>
   );
