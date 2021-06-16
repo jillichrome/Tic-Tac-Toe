@@ -7,18 +7,23 @@ function Game() {
   const [squares, setSquares] = useState(Array(9).fill(null));
   const [isXNext, setIsXNext] = useState(true);
 
+  const winner = calculateWinner(squares);
+
   function renderSquare(i) {
     return(
       <Square value={squares[i]} onClick={() => {
+        if( squares[i] !== null || squares[i] !== winner) {
+          return;
+        }
+
         const nextSquare = squares.slice();
         nextSquare[i] = isXNext ? 'X' : 'O';
+
         setSquares(nextSquare);
         setIsXNext(!isXNext)
       }} />
     )
   };
-
-  const winner = calculateWinner(squares);
 
   function isBoardFull(squares) {
     for(let i = 0; i < squares.length; i++) {
