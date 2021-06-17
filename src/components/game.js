@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Square from './square.js';
 import calculateWinner from './calculateWinner.js';
+import Restart from './restart.js';
 import "./game.css";
 
 function Game() {
@@ -44,6 +45,23 @@ function Game() {
     }
   }
 
+  function gameOver() {
+    if(winner) {
+      return "Play Again";
+    } else {
+      return "Restart"
+    };
+  }
+
+  function renderRestartButton() {
+    return(
+      <Restart value={gameOver()} onClick={ () => {
+        setSquares(Array(9).fill(null));
+        setIsXNext(true)
+      }} />
+    )
+  }
+
   return (
     <div className="container">
       <div className="game">
@@ -65,6 +83,7 @@ function Game() {
           </div>
         </div>
         <div className='game-info'>{getStatus()}</div>
+        <div className='restart-button'>{renderRestartButton()}</div>
       </div>
     </div>
   );
